@@ -1,0 +1,39 @@
+# k8s/deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ideaforge-ai-deployment
+  labels:
+    app: ideaforge-ai
+spec:
+  replicas: 1 
+  selector:
+    matchLabels:
+      app: ideaforge-ai
+  template:
+    metadata:
+      labels:
+        app: ideaforge-ai
+    spec:
+      containers:
+      - name: ideaforge-ai-app
+        image: ideaforge-ai-assistant:latest 
+        ports:
+        - containerPort: 5000 
+        env:
+          - name: LLM_MODEL
+            value: "gpt2" 
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ideaforge-ai-service
+spec:
+  selector:
+    app: ideaforge-ai 
+  ports:
+    - protocol: TCP
+      port: 80 
+      targetPort: 5000
+  type: LoadBalancer 
