@@ -18,6 +18,7 @@ spec:
       containers:
       - name: ideaforge-ai-app
         image: ideaforge-ai-assistant:latest 
+        imagePullPolicy: Never 
         ports:
         - containerPort: 5000 
         env:
